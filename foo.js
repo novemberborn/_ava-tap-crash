@@ -2,16 +2,15 @@
 
 process.on('message', function (m) {
   if (m === 'bye') {
-    // Matches how the child process exits in AVA:
+    // Note that in AVA the child process exits with a 0ms timeout, but that
+    // doesn't seem necessary here.
     // <https://github.com/sindresorhus/ava/blob/v0.13.0/lib/test-worker.js#L127:L134>
-    setTimeout(function () {
-      process.exit(0)
-    }, 0)
+    process.exit(0)
   }
 })
 
-// Matches AVA's behavior when an uncaught exception is thrown, like
+// The failing test starts a child that asynchronously throws an uncaught exception,
+// which then causes a message to be sent to the main process:
 // <https://github.com/sindresorhus/ava/blob/v0.13.0/test/fixture/with-dependencies/test-uncaught-exception.js#L11:L13>
-setImmediate(function () {
-  process.send('hello')
-})
+// This asynchronicity is not necessary to reproduce this crash.
+process.send('hello')
