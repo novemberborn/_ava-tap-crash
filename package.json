@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "ava-tap-crash",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {},
+  "devDependencies": {
+    "tap": "^5.7.0"
+  },
+  "scripts": {
+    "reproduce-tap": "while tap -R spec tap.js; do :; done",
+    "reproduce-standalone": "while node standalone.js; do :; done"
+  },
+  "author": "Mark Wubben (https://novemberborn.net/)",
+  "license": "ISC"
+}
